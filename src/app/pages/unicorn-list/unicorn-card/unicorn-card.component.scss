@@ -1,0 +1,36 @@
+
+@import '../../../../styles.scss';
+
+mat-card-header{
+  background-color: $primary;
+  color: white;
+  padding: 10px;
+}
+mat-card {
+  width: 300px;
+  padding: 0;
+  margin: 20px;
+  .photo {
+    border-top: rgba($color: black, $alpha: 0.3) solid 1px;
+    border-bottom: rgba($color: black, $alpha: 0.3) solid 1px;
+    width: 300px;
+  }
+}
+
+.buttons {
+  border-top: rgba($color: black, $alpha: 0.3) solid 1px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.ellipsis {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.details {
+  padding: 10px;
+}

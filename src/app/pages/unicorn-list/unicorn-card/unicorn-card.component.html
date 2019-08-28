@@ -1,0 +1,22 @@
+<mat-card>
+  <div class="infos">
+
+    <mat-card-header>
+      <img mat-card-avatar [src]="unicorn.photo"/>
+      <div class="ellipsis">{{ unicorn.name }} <br> {{ unicorn.id }}</div>
+
+    </mat-card-header>
+    <img class="photo" [src]="unicorn.photo" />
+    <div class="details">
+      <div>weight: {{ unicorn.weight }}</div>
+      <div class="ellipsis">hobbies: {{ unicorn.hobbies }}</div>
+      <div class="ellipsis">capacities: {{ unicorn.capacitiesLabels }}</div>
+    </div>
+  </div>
+  <div class="buttons">
+    <button mat-fab (click)="delete()" color="primary"><i class="material-icons">visibility</i></button>
+    <button mat-fab (click)="delete()" [color]="getColor()" (click)="toogleFavorite()" ><i class="material-icons">favorite</i></button>
+    <button mat-fab (click)="delete()" color="primary"><i class="material-icons">edit</i></button>
+    <button mat-fab (click)="delete()"color="primary"><i class="material-icons" (click)="delete()">delete</i></button>
+  </div>
+</mat-card>
