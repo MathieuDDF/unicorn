@@ -9,7 +9,7 @@ export class AppComponent {
   title = 'my-app';
   opened: boolean;
 
-  toogle() {
+  toggle() {
     return !this.opened;
   }
 }

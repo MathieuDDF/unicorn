@@ -38,7 +38,7 @@ export class UnicornCardComponent {
     return this.liked ? 'accent' : 'primary';
   }
 
-  public toogleFavorite() {
+  public toggleFavorite() {
     if (this.liked) {
       this.store.dispatch(CartActions.removeUnicornFromCart({ unicorn: this.unicorn }));
     } else {
