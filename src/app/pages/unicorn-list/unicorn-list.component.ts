@@ -15,10 +15,11 @@ export class UnicornListComponent {
 
   constructor(private unicornsService: UnicornsService,
     private store: Store<AppState>) {
-    this.unicornsService.getAllWithCapacityLabels2().subscribe(
-      unicorns => this.store.dispatch(UnicornActions.setUnicorn({ unicorns }))
-    );
+
+    this.store.dispatch(UnicornActions.loadUnicorns());
+
   }
 
   public unicorns$: Observable<Unicorn[]> = this.store.select('unicorns');
+
 }
