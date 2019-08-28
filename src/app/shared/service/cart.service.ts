@@ -1,26 +1,41 @@
+import { AppState } from './../../store/app.state';
 import { Unicorn } from './../models/unicorn.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
-
+import { Store } from '@ngrx/store';
+import * as CartActions from './../../store/actions/cart.actions';
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  constructor() {}
+  constructor(private store: Store<AppState>) {}
 
-  selectedUnicorns$ = new BehaviorSubject<Unicorn[]>([]);
+  cart$ = new BehaviorSubject<Unicorn[]>([]);
 
-  public toogle(unicorn: Unicorn) {
-    const newTab: Unicorn[] = this.isPresent(unicorn)
-      ? this.selectedUnicorns$.value.filter(u => u.id !== unicorn.id)
-      : [...this.selectedUnicorns$.value, unicorn];
-    this.selectedUnicorns$.next(newTab);
+  public toggle(unicorn: Unicorn) {
+    this.isPresent(unicorn).subscribe(isPresent => {
+      if (isPresent) {
+        this.removeFromCart(unicorn);
+      } else {
+        this.addToCart(unicorn);
+      }
+    });
   }
 
-  public isPresent(unicorn: Unicorn): boolean {
-    return this.selectedUnicorns$
-        .getValue()
-        .some(u => unicorn && u.id === unicorn.id);
+  private addToCart(unicorn: Unicorn) {
+    this.store.dispatch(CartActions.addUnicornToCart({ unicorn }));
+  }
+
+  private removeFromCart(unicorn: Unicorn) {
+    this.store.dispatch(CartActions.removeUnicornFromCart({ unicorn }));
+  }
+
+  public isPresent(unicorn: Unicorn): Observable<boolean> {
+    return this.store
+      .select('cart')
+      .pipe(
+        map(unicorns => unicorns.some(u => unicorn && u.id === unicorn.id))
+      );
   }
 }

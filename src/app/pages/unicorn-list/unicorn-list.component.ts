@@ -1,7 +1,10 @@
 import { Unicorn } from './../../shared/models/unicorn.model';
 import { Observable } from 'rxjs';
 import { UnicornsService } from './../../shared/service/unicorns.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AppState } from '../../store/app.state';
+import { Store } from '@ngrx/store';
+import * as UnicornActions from '../../store/actions/unicorns.actions';
 
 @Component({
   selector: 'app-unicorn-list',
@@ -9,7 +12,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./unicorn-list.component.scss']
 })
 export class UnicornListComponent {
-  public unicorns$: Observable<Unicorn[]> = this.unicornsService.getAllWithCapacityLabels2();
-  constructor(private unicornsService: UnicornsService) { }
+
+  constructor(private unicornsService: UnicornsService,
+    private store: Store<AppState>) {
+
+    this.store.dispatch(UnicornActions.loadUnicorns());
+
+  }
+
+  public unicorns$: Observable<Unicorn[]> = this.store.select('unicorns');
 
 }

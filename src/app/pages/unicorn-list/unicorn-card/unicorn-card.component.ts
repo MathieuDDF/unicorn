@@ -1,6 +1,10 @@
-import { Unicorn } from './../../../shared/models/unicorn.model';
-import { CartService } from './../../../shared/service/cart.service';
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { CartService } from '../../../shared/service/cart.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/app.state';
+import * as CartActions from '../../../store/actions/cart.actions';
+import * as UnicornsActions from '../../../store/actions/unicorns.actions';
+import { UnicornsService } from '../../../shared/service/unicorns.service';
 
 @Component({
   selector: 'app-unicorn-card',
@@ -8,8 +12,9 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./unicorn-card.component.scss']
 })
 export class UnicornCardComponent {
-  constructor(private cartService: CartService) {}
-
+  constructor(private cartService: CartService,
+    private store: Store<AppState>,
+    private unicornsService: UnicornsService) { }
 
   @Input()
   public unicorn;
@@ -17,12 +22,12 @@ export class UnicornCardComponent {
   @Output()
   private deleted = new EventEmitter();
 
-  isPresent$ = this.cartService.isPresent(this.unicorn);
-  /**
-   * delete
-   */
+  public liked = false;
+
   public delete() {
-    this.deleted.emit();
+    this.unicornsService.delete(this.unicorn.id).subscribe(() => {
+      this.store.dispatch(UnicornsActions.deleteUnicorn({ unicorn: this.unicorn }));
+    });
   }
 
   public log(event: MouseEvent) {
@@ -30,11 +35,16 @@ export class UnicornCardComponent {
   }
 
   public getColor() {
-    return this.cartService.isPresent(this.unicorn) ? 'accent' : 'primary';
+    return this.liked ? 'accent' : 'primary';
   }
-  public toogleFavorite() {
-    this.cartService.toogle(this.unicorn);
-    this.isPresent$ = this.cartService.isPresent(this.unicorn);
+
+  public toggleFavorite() {
+    if (this.liked) {
+      this.store.dispatch(CartActions.removeUnicornFromCart({ unicorn: this.unicorn }));
+    } else {
+      this.store.dispatch(CartActions.addUnicornToCart({ unicorn: this.unicorn }));
+    }
+    this.liked = !this.liked;
   }
 
 }

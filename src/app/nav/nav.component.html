@@ -28,7 +28,7 @@
         </button>
         <span>my-app</span>
       </div>
-      <span><i class="material-icons">favorite</i> {{(cartService.selectedUnicorns$ | async).length}}</span>
+      <span><i class="material-icons">favorite</i> {{(cart$ | async).length}}</span>
     </mat-toolbar>
     <app-unicorn-list></app-unicorn-list>
   </mat-sidenav-content>
