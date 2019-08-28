@@ -9,12 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./unicorn-list.component.scss']
 })
 export class UnicornListComponent {
-  public unicorns$: Observable<
-    Unicorn[]
-  > = this.unicornsService.getAllWithCapacityLabels2();
-  constructor(private unicornsService: UnicornsService) {}
+  public unicorns$: Observable<Unicorn[]> = this.unicornsService.getAllWithCapacityLabels2();
+  constructor(private unicornsService: UnicornsService) { }
 
-  public delete() {
-    this.unicornsService.delete();
-  }
 }

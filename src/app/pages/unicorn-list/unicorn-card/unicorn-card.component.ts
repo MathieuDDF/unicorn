@@ -1,7 +1,6 @@
 import { Unicorn } from './../../../shared/models/unicorn.model';
 import { CartService } from './../../../shared/service/cart.service';
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { UnicornsService } from 'src/app/shared/service/unicorns.service';
 
 @Component({
   selector: 'app-unicorn-card',
@@ -9,10 +8,8 @@ import { UnicornsService } from 'src/app/shared/service/unicorns.service';
   styleUrls: ['./unicorn-card.component.scss']
 })
 export class UnicornCardComponent {
-  constructor(
-    private cartService: CartService,
-    private unicornsService: UnicornsService
-  ) {}
+  constructor(private cartService: CartService) {}
+
 
   @Input()
   public unicorn;
