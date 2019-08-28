@@ -1,8 +1,10 @@
+import { AppState } from './../store/app.state';
 import { CartService } from './../shared/service/cart.service';
 import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, share, count } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-nav',
@@ -17,9 +19,10 @@ export class NavComponent {
       share()
     );
 
+  public cart$ = this.store.select('cart');
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    public cartService: CartService
+    private store: Store<AppState>
   ) {}
 }

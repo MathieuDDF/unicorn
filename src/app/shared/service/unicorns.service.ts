@@ -20,7 +20,7 @@ export class UnicornsService {
   }
 
   public delete(id) {
-    this.http.delete(`http://localhost:3000/unicorns/${id}`);
+    return this.http.delete(`http://localhost:3000/unicorns/${id}`);
   }
 
   public getAllWithCapacityLabels(): Observable<Unicorn[]> {
